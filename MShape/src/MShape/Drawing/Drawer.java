@@ -3,10 +3,18 @@ package MShape.Drawing;
 import java.awt.*;
 import javax.swing.*;
 
+import MShape.MLang.Commands.StyleCommand;
+
 /**
  * This class draws on screen
  */
 public class Drawer {
+
+    public enum Style {
+        Solid, 
+        Dashed,
+        Dotted
+    }
 
     public void Down() {
 
@@ -20,7 +28,7 @@ public class Drawer {
 
     }
 
-    public void SetStyle(/* style type not yet implemented :( */) {
+    public void SetStyle(Style style) {
 
     }
 

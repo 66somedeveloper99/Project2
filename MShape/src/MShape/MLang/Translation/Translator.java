@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import MShape.MLang.Commands.ColorCommand;
 import MShape.MLang.Commands.DownCommand;
 import MShape.MLang.Commands.ICommand;
@@ -14,6 +15,7 @@ import MShape.MLang.Commands.IncVarCommand;
 import MShape.MLang.Commands.MoveCommand;
 import MShape.MLang.Commands.SetVarCommand;
 import MShape.MLang.Commands.SizeCommand;
+import MShape.MLang.Commands.StyleCommand;
 import MShape.MLang.Commands.UpCommand;
 import MShape.MLang.Variables.IntVariable;
 
@@ -115,9 +117,7 @@ public class Translator {
                 
                 case "STYLE":
                 {
-                    /**
-                     * Not yet implemented
-                     */
+                    commands.add(new StyleCommand(line_split[1]));
                 }
                     break;
                 
