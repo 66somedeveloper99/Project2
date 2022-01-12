@@ -1,0 +1,10 @@
+MOVE(1,0)
+SET(A, 10)
+DOWN
+MOVE(0, 10)
+UP
+
+FOR(3, 3)
+DOWN
+MOVE(1, 0)
+UP
