@@ -3,8 +3,6 @@ package MShape.Drawing;
 import java.awt.*;
 import javax.swing.*;
 
-import MShape.MLang.Commands.StyleCommand;
-
 /**
  * This class draws on screen
  */
