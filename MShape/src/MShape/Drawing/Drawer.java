@@ -12,7 +12,7 @@ public class Drawer extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
-
+        this.revalidate();
     }
 
     public Drawer() {
@@ -29,25 +29,30 @@ public class Drawer extends JPanel {
     }
 
     public void Down() {
-
+        System.out.println("down");
     }
-
+    
     public void Up() {
-
+        System.out.println("up");
+        
     }
-
+    
     public void Move(int x, int y) {
-
+        System.out.println("move to "+x+", "+y);
+        
     }
-
+    
     public void SetStyle(Style style) {
-
+        System.out.println("style : "+style.toString());
+        
     }
-
+    
     public void SetColor(Color color) {
+        System.out.println("col to "+color);
         
     }
     public void SetSize(int size) {
+        System.out.println("size to "+size);
 
     }
 
