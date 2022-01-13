@@ -8,8 +8,22 @@ import MShape.MLang.Commands.StyleCommand;
 /**
  * This class draws on screen
  */
-public class Drawer {
+public class Drawer extends JPanel {
 
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D)g;
+
+    }
+
+    public Drawer() {
+        super();
+        JFrame frame = new JFrame("title");
+        frame.add(this);
+        frame.setVisible(true);
+        frame.setSize(new Dimension(400, 300));
+    }
     public enum Style {
         Solid, 
         Dashed,
