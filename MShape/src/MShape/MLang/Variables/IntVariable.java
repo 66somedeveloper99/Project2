@@ -1,14 +1,17 @@
 package MShape.MLang.Variables;
 
-public class IntVariable extends Variable {
+public class IntVariable {
 
     public int value;
+    public final String name;
 
-    public IntVariable(String name) { super(name); }
-    
-    @Override
-    public void SetValue(Object value) { this.value = (int) value; }
-    @Override
-    public Object GetValue() { return Integer.valueOf(value); }
+    public IntVariable(String name) {
+        this.name = name;
+    }
+
+    public IntVariable(String name, int value) {
+        this.name = name;
+        this.value = value;
+    }
 }
 

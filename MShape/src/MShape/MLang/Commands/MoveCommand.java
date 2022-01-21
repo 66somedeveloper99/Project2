@@ -1,14 +1,16 @@
 package MShape.MLang.Commands;
 
+import MShape.MLang.Variables.IntVariable;
+
 public class MoveCommand implements ICommand {
-    public final int x, y;
-    public MoveCommand(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public final String xName, yName;
+    public MoveCommand(String x, String y) {
+        this.xName = x;
+        this.yName = y;
     }
 
     @Override
     public String toString() {
-        return "Move ("+x+", "+y+")";
+        return "Move ("+xName+", "+yName+")";
     }
 }

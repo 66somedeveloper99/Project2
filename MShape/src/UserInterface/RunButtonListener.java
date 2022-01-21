@@ -31,8 +31,12 @@ public class RunButtonListener implements ActionListener {
         Thread thread = new Thread() {
             @Override
             public void run() {
+                
+                System.out.println("executing...");
+
                 // executing commands
                 while (commander.hasNextCommand()) {
+                    System.out.println(commander.commands[commander.getCurrentCommandIndex()]);
                     commander.ExecuteNextCommand();
                     // wait for 0.1 second
                     try {

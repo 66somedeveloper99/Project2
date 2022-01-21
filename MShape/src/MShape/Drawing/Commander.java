@@ -1,13 +1,8 @@
 package MShape.Drawing;
 
+import MShape.MLang.Commands.*;
 import MShape.Drawing.Drawer.Style;
-import MShape.MLang.Commands.ColorCommand;
-import MShape.MLang.Commands.DownCommand;
-import MShape.MLang.Commands.ICommand;
-import MShape.MLang.Commands.MoveCommand;
-import MShape.MLang.Commands.SizeCommand;
-import MShape.MLang.Commands.StyleCommand;
-import MShape.MLang.Commands.UpCommand;
+import MShape.MLang.Variables.VariableDictionary;
 
 /**
  * holds commands, then executes them on a Drawer
@@ -39,27 +34,7 @@ public class Commander {
     }
 
     private void Execute(ICommand command) {
-        /*
-         * it should call the appropriate method on the drawer variable
-         * for example, if command is a DownCommand, it should call drawer.Down() like
-         * below
-         * 
-         * if (command.getClass().equals(DownCommand.class)) {
-         * drawer.Down();
-         * }
-         * 
-         * if the method requires variables, we should get the variables from the
-         * command with casting
-         * for example, in the below example we're checking if the command is
-         * SizeCommand. if it is, we get it's size
-         * 
-         * if (command.getClass().equals(SizeCommand.class)) {
-         * int size = ((SizeCommand) command).size;
-         * }
-         */
-
-        // the solution :
-
+        
         if (command.getClass().equals(DownCommand.class)) {
 
             drawer.Down();
@@ -75,8 +50,8 @@ public class Commander {
         }
 
         else if (command.getClass().equals(MoveCommand.class)) {
-            int x = ((MoveCommand) command).x;
-            int y = ((MoveCommand) command).y;
+            int x = VariableDictionary.GetValueOf(((MoveCommand) command).xName).value;
+            int y = VariableDictionary.GetValueOf(((MoveCommand) command).yName).value;
             drawer.Move(x, y);
         }
 
@@ -88,6 +63,11 @@ public class Commander {
         else if (command.getClass().equals(StyleCommand.class)) {
             Style style = ((StyleCommand) command).style;
             drawer.SetStyle(style);
+        }
+
+        else if (command.getClass().equals(SetVarCommand.class)) {
+            SetVarCommand cmd = ((SetVarCommand) command);
+            VariableDictionary.SetValueOf(cmd.variableName, cmd.value);
         }
     }
 }

@@ -22,6 +22,7 @@ public class MainGUI {
         frame.setSize(new Dimension(600, 800));
         frame.setMaximumSize(new Dimension(600, 800));
         frame.setResizable(false);
+
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
         // toolbar_pnl.setla
@@ -41,6 +42,6 @@ public class MainGUI {
         content.add(toolbar_pnl);
         content.add(script_pnl);
         frame.setVisible(true);
-        frame.setLayout(null);
+        frame.setLocationRelativeTo(null); // center
     }
 }

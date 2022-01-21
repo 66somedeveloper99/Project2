@@ -5,9 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import MShape.MLang.Commands.*;
-import MShape.MLang.Variables.IntVariable;
 
 /**
  * Translates MLang to Commands
@@ -94,9 +92,28 @@ public class Translator {
 
                 case "MOVE": 
                 {
-                    int x = Integer.parseInt(line_split[1].trim());
-                    int y = Integer.parseInt(line_split[2].trim());
-                    commands.add(new MoveCommand(x, y));
+                    String xName;
+                    try {
+                        // if X was direct value, create a variable for it
+                        int x = Integer.parseInt(line_split[1].trim());
+                        xName = "TMP_X";
+                        commands.add(new SetVarCommand(xName, x));
+                    } catch (Exception e) {
+                        // else if it's variable, use it
+                        xName = line_split[1].trim();
+                    }
+
+                    String yName;
+                    try {
+                        // if y was direct value, create a variable for it
+                        int y = Integer.parseInt(line_split[1].trim());
+                        yName = "TMP_Y";
+                        commands.add(new SetVarCommand(yName, y));
+                    } catch (Exception e) {
+                        // else if it's variable, use it
+                        yName = line_split[2].trim();
+                    }
+                    commands.add(new MoveCommand(xName, yName));
                 }
                     break;
                 
@@ -151,27 +168,8 @@ public class Translator {
                     String name = line_split[1];
                     String value = line_split[2].trim();
 
-                    /**
-                     * check for type of value in a try catch. if it did not throw exception in convertion one type ,
-                     *  it means it's of that type
-                     */
-
-                    try{
-                        int int_value = Integer.parseInt(value);
-                        commands.add(
-                            new SetVarCommand(new IntVariable(name), Integer.valueOf(int_value))
-                            );
-
-                        // this variable was of type int. done.
-                        continue main_loop;
-                    } catch (Exception e) {}
-
-                    try{
-                        // other variable types here :...
-
-                        // this variable was of type ___. done.
-                        continue main_loop;
-                    } catch (Exception e) {}
+                    int int_value = Integer.parseInt(value);
+                    commands.add( new SetVarCommand(name, Integer.valueOf(int_value)));
 
                     // if reached this line, then the variable was not recognized.
                     System.err.println("Variable "+name+" was not recognized.");
@@ -181,33 +179,33 @@ public class Translator {
                     
                 case "INC": 
                 {
-                    String name = line_split[1];
-                    String value = line_split[2];
+                    // String name = line_split[1];
+                    // String value = line_split[2];
 
-                    /**
-                     * check for type of value in a try catch. if it did not throw exception in convertion one type ,
-                     *  it means it's of that type
-                     */
+                    // /**
+                    //  * check for type of value in a try catch. if it did not throw exception in convertion one type ,
+                    //  *  it means it's of that type
+                    //  */
 
-                    try{
-                        int int_value = Integer.parseInt(value);
-                        commands.add(
-                            new IncVarCommand(new IntVariable(name), Integer.valueOf(int_value))
-                            );
+                    // try{
+                    //     int int_value = Integer.parseInt(value);
+                    //     commands.add(
+                    //         new IncVarCommand(new IntVariable(name), Integer.valueOf(int_value))
+                    //         );
 
-                        // this variable was of type int. done.
-                        continue main_loop;
-                    } catch (Exception e) {}
+                    //     // this variable was of type int. done.
+                    //     continue main_loop;
+                    // } catch (Exception e) {}
 
-                    try{
-                        // other variable types here :...
+                    // try{
+                    //     // other variable types here :...
 
-                        // this variable was of type ___. done.
-                        continue main_loop;
-                    } catch (Exception e) {}
+                    //     // this variable was of type ___. done.
+                    //     continue main_loop;
+                    // } catch (Exception e) {}
 
-                    // if reached this line, then the variable was not recognized.
-                    System.err.println("Variable "+name+" was not recognized.");
+                    // // if reached this line, then the variable was not recognized.
+                    // System.err.println("Variable "+name+" was not recognized.");
                     throw new Exception("Translation Aborted.");
                 }
                 

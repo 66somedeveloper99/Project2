@@ -66,6 +66,7 @@ public class Drawer extends JPanel {
         frame.add(this);
         frame.setVisible(true);
         frame.setSize(new Dimension(400, 400));
+        frame.setLocationRelativeTo(null); // center
     }
 
     public enum Style {
