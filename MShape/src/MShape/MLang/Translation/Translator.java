@@ -3,32 +3,33 @@ package MShape.MLang.Translation;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import MShape.MLang.Commands.ColorCommand;
-import MShape.MLang.Commands.DownCommand;
-import MShape.MLang.Commands.ICommand;
-import MShape.MLang.Commands.IncVarCommand;
-import MShape.MLang.Commands.MoveCommand;
-import MShape.MLang.Commands.SetVarCommand;
-import MShape.MLang.Commands.SizeCommand;
-import MShape.MLang.Commands.StyleCommand;
-import MShape.MLang.Commands.UpCommand;
+import MShape.MLang.Commands.*;
 import MShape.MLang.Variables.IntVariable;
 
 /**
  * Translates MLang to Commands
  */
 public class Translator {
-    final FileInputStream fileInputStream;
-    final Scanner input;
 
-    public Translator(File MFile) throws FileNotFoundException {
-        this.fileInputStream = new FileInputStream(MFile);
-        this.input = new Scanner(fileInputStream);
+    String script;
+
+    public Translator(File MFile) throws Exception {
+        FileInputStream fileInputStream = new FileInputStream(MFile);
+        Scanner input = new Scanner(fileInputStream);
+        StringBuilder str = new StringBuilder();
+        while (input.hasNextLine())
+            str.append(input.nextLine() + System.lineSeparator());
+
+        script = str.toString();
+        input.close();
+        fileInputStream.close();
+    }
+
+    public Translator(String script) {
+        this.script = script;
     }
 
     /**
@@ -37,14 +38,15 @@ public class Translator {
      */
     public ICommand[] Translate() throws Exception {
 
-        ArrayList<String> all_lines = new ArrayList<String>();
-        while (input.hasNextLine()) {
-            String line = input.nextLine();
+        String[] lines = script.split(System.lineSeparator());
+        ArrayList<String> mod_lines = new ArrayList<String>();
+
+        for (String line : lines) {
             if(line.isEmpty()) continue; // ignoring blank lines
-            all_lines.add(line);
+            mod_lines.add(line);
         }
 
-        ArrayList<ICommand> commands = translateLines(all_lines);
+        ArrayList<ICommand> commands = translateLines(mod_lines);
 
         System.out.println("Compilation successful!");
 
@@ -224,14 +226,5 @@ public class Translator {
 
         
         return commands;
-    }
-
-    /**
-     * Closes input files and disposes other disposables
-     */
-    public void Dispose() {
-        input.close();
-        try { fileInputStream.close(); } 
-        catch (IOException e) { }
     }
 }

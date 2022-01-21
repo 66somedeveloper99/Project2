@@ -1,10 +1,11 @@
+package UserInterface;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-public class Utilities {
+public class MUtilities {
     // so it can't be instansiated
-    private Utilities() {}
+    private MUtilities() {}
 
     static public File GetFileFromUser() {
         JFileChooser fileChooser = new JFileChooser(".");
