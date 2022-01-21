@@ -31,7 +31,6 @@ public class RunButtonListener implements ActionListener {
         // executing commands
         while (commander.hasNextCommand()) {
             commander.ExecuteNextCommand();
-
             // wait for 1 second
             try {
                 Thread.sleep(100);

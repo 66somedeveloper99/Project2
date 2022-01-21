@@ -38,7 +38,8 @@ public class Translator {
      */
     public ICommand[] Translate() throws Exception {
 
-        String[] lines = script.split(System.lineSeparator());
+        System.out.println("translating " + script);
+        String[] lines = script.split("\n");
         ArrayList<String> mod_lines = new ArrayList<String>();
 
         for (String line : lines) {
@@ -48,7 +49,7 @@ public class Translator {
 
         ArrayList<ICommand> commands = translateLines(mod_lines);
 
-        System.out.println("Compilation successful!");
+        System.out.println("Compilation successful! "+commands.size()+" commands in total");
 
         // ArrayList<ICommand> => ICommand[]
         ICommand[] commands_arr = new ICommand[commands.size()];
