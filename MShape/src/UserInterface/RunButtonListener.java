@@ -25,19 +25,25 @@ public class RunButtonListener implements ActionListener {
     }
 
     private static void RunDrawing(ICommand[] commands) {
-        Drawer drawer = new Drawer();
-        Commander commander = new Commander(commands, drawer);
+        final Drawer drawer = new Drawer();
+        final Commander commander = new Commander(commands, drawer);
 
-        // executing commands
-        while (commander.hasNextCommand()) {
-            commander.ExecuteNextCommand();
-            // wait for 0.1 second
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                // executing commands
+                while (commander.hasNextCommand()) {
+                    commander.ExecuteNextCommand();
+                    // wait for 0.1 second
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
+        };
+        thread.start();
     }
 
 }
