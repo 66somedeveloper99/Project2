@@ -42,7 +42,7 @@ public class Commander {
 
         } else if (command.getClass().equals(SizeCommand.class)) {
 
-            int size = ((SizeCommand) command).size;
+            int size = VariableDictionary.GetValueOf(((SizeCommand) command).sizeName).value;
             drawer.SetSize(size);
         }
 

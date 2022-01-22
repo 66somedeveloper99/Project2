@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.sound.sampled.Line;
+
 import MShape.MLang.Commands.*;
 
 /**
@@ -35,12 +38,11 @@ public class Translator {
      */
     public ICommand[] Translate() throws Exception {
 
-        System.out.println("translating " + script);
         String[] lines = script.split("\n");
         ArrayList<String> mod_lines = new ArrayList<String>();
 
         for (String line : lines) {
-            if(line.trim().isEmpty()) continue; // ignoring blank lines
+            if(line.trim().isEmpty() || line.startsWith("#")) continue; // ignoring blank lines
             mod_lines.add(line);
         }
 
@@ -71,7 +73,7 @@ public class Translator {
         // a lable for later usage
         main_loop:
         do {
-            line = lines.get(line_index);
+            line = lines.get(line_index).trim();
             String[] line_split = line.split("[(),]");
             command = line_split[0];    
 
@@ -80,14 +82,14 @@ public class Translator {
                 case "UP":
                 {
                     commands.add(new UpCommand());
-                }
                     break;
+                }
                 
                 case "DOWN":
                 {
                     commands.add(new DownCommand());
-                }
                     break;
+                }
 
                 case "MOVE": 
                 {
@@ -95,8 +97,8 @@ public class Translator {
                     String yName = GetIntVariableName(commands, line_split[2].trim(), "TMP_X");
 
                     commands.add(new MoveCommand(xName, yName));
-                }
                     break;
+                }
                 
                 case "COLOR": 
                 {
@@ -105,21 +107,21 @@ public class Translator {
                     String bName = GetIntVariableName(commands, line_split[3].trim(), "TMP_B");
 
                     commands.add(new ColorCommand(rName, gName, bName));
-                }
                     break;
+                }
 
                 case "SIZE":
                 {
-                    int size = Integer.parseInt(line_split[1].trim());
+                    String size = GetIntVariableName(commands, line_split[1].trim(), "TMP_SIZE");
                     commands.add(new SizeCommand(size));
-                }
                     break;
+                }
                 
                 case "STYLE":
                 {
                     commands.add(new StyleCommand(line_split[1]));
-                }
                     break;
+                }
                 
                 case "FOR": 
                 {
@@ -139,8 +141,8 @@ public class Translator {
                     for (; k > 1; k--) {
                         commands.addAll(for_commands);
                     }
-                }
                     break;
+                }
 
                 case "SET": 
                 {
@@ -166,7 +168,8 @@ public class Translator {
                     /**
                      * if reached here, the command was not recognized. throw exception
                      */
-                    System.err.println("Command "+command+" was not recognized");
+                    System.out.println("Command "+line+" was not recognized");
+                    System.out.println("Command was "+line);
                     throw new Exception("Translation aborted.");
                 }
             }
