@@ -87,8 +87,8 @@ public class Drawer extends JPanel {
     public void Move(int x, int y) {
         X_1 = X_2;
         Y_1 = Y_2;
-        X_2 = x;
-        Y_2 = y;
+        X_2 += x;
+        Y_2 += y;
         if (pen) {
 
             // add draw
@@ -107,10 +107,10 @@ public class Drawer extends JPanel {
             }
             phases.add(new Phase(drawingstroke, color, X_1, Y_1, X_2, Y_2));
 
-            // repaint it
-            this.repaint();
-            this.revalidate();
         }
+        // repaint it
+        this.repaint();
+        this.revalidate();
     }
 
     public void SetStyle(Style style) {

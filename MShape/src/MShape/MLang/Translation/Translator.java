@@ -1,6 +1,5 @@
 package MShape.MLang.Translation;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class Translator {
         ArrayList<String> mod_lines = new ArrayList<String>();
 
         for (String line : lines) {
-            if(line.isEmpty()) continue; // ignoring blank lines
+            if(line.trim().isEmpty()) continue; // ignoring blank lines
             mod_lines.add(line);
         }
 
@@ -92,39 +91,20 @@ public class Translator {
 
                 case "MOVE": 
                 {
-                    String xName;
-                    try {
-                        // if X was direct value, create a variable for it
-                        int x = Integer.parseInt(line_split[1].trim());
-                        xName = "TMP_X";
-                        commands.add(new SetVarCommand(xName, x));
-                    } catch (Exception e) {
-                        // else if it's variable, use it
-                        xName = line_split[1].trim();
-                    }
+                    String xName = GetIntVariableName(commands, line_split[1].trim(), "TMP_X");
+                    String yName = GetIntVariableName(commands, line_split[2].trim(), "TMP_X");
 
-                    String yName;
-                    try {
-                        // if y was direct value, create a variable for it
-                        int y = Integer.parseInt(line_split[1].trim());
-                        yName = "TMP_Y";
-                        commands.add(new SetVarCommand(yName, y));
-                    } catch (Exception e) {
-                        // else if it's variable, use it
-                        yName = line_split[2].trim();
-                    }
                     commands.add(new MoveCommand(xName, yName));
                 }
                     break;
                 
                 case "COLOR": 
                 {
-                    int r = Integer.parseInt(line_split[1].trim());
-                    int g = Integer.parseInt(line_split[2].trim());
-                    int b = Integer.parseInt(line_split[3].trim());
+                    String rName = GetIntVariableName(commands, line_split[1].trim(), "TMP_R");
+                    String gName = GetIntVariableName(commands, line_split[2].trim(), "TMP_G");
+                    String bName = GetIntVariableName(commands, line_split[3].trim(), "TMP_B");
 
-                    Color color = new Color(r, g, b);
-                    commands.add(new ColorCommand(color));
+                    commands.add(new ColorCommand(rName, gName, bName));
                 }
                     break;
 
@@ -156,7 +136,7 @@ public class Translator {
                     ArrayList<ICommand> for_commands = translateLines(new_lines);
 
                     // add the commands to the list of commands, k times
-                    for (; k > 0; k--) {
+                    for (; k > 1; k--) {
                         commands.addAll(for_commands);
                     }
                 }
@@ -170,43 +150,15 @@ public class Translator {
 
                     int int_value = Integer.parseInt(value);
                     commands.add( new SetVarCommand(name, Integer.valueOf(int_value)));
-
-                    // if reached this line, then the variable was not recognized.
-                    System.err.println("Variable "+name+" was not recognized.");
-                    throw new Exception("Translation Aborted.");
-                    
+                    break;
                 }
                     
                 case "INC": 
                 {
-                    // String name = line_split[1];
-                    // String value = line_split[2];
-
-                    // /**
-                    //  * check for type of value in a try catch. if it did not throw exception in convertion one type ,
-                    //  *  it means it's of that type
-                    //  */
-
-                    // try{
-                    //     int int_value = Integer.parseInt(value);
-                    //     commands.add(
-                    //         new IncVarCommand(new IntVariable(name), Integer.valueOf(int_value))
-                    //         );
-
-                    //     // this variable was of type int. done.
-                    //     continue main_loop;
-                    // } catch (Exception e) {}
-
-                    // try{
-                    //     // other variable types here :...
-
-                    //     // this variable was of type ___. done.
-                    //     continue main_loop;
-                    // } catch (Exception e) {}
-
-                    // // if reached this line, then the variable was not recognized.
-                    // System.err.println("Variable "+name+" was not recognized.");
-                    throw new Exception("Translation Aborted.");
+                    String name = line_split[1].trim();
+                    String valName = GetIntVariableName(commands, line_split[2].trim(), "TMP_INC");
+                    commands.add(new IncIntCommand(name, valName));
+                    break;
                 }
                 
                 default:
@@ -225,5 +177,17 @@ public class Translator {
 
         
         return commands;
+    }
+
+    private String GetIntVariableName(ArrayList<ICommand> commands, String str, String tmp_var_name) {
+        String name;
+        try {
+            int val = Integer.parseInt(str);
+            name = tmp_var_name;
+            commands.add(new SetVarCommand(name, val));
+        } catch (Exception e) {
+            name = str;
+        }
+        return name;
     }
 }

@@ -1,14 +1,14 @@
 package MShape.MLang.Commands;
 
-import java.awt.*;
-
 public class ColorCommand implements ICommand {
-    public final Color color;
-    public ColorCommand(Color color) {
-        this.color = color;
+    public final String rName, gName, bName;
+    public ColorCommand(String rName, String gName, String bName) {
+        this.rName = rName;
+        this.gName = gName;
+        this.bName = bName;
     }
     @Override
     public String toString() {
-        return "Set Color("+color.toString()+")";
+        return "Set Color(" + rName + ", " + gName + ", " + bName + ")";
     }
 }

@@ -40,7 +40,7 @@ public class RunButtonListener implements ActionListener {
                     commander.ExecuteNextCommand();
                     // wait for 0.1 second
                     try {
-                        sleep(1000);
+                        sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
