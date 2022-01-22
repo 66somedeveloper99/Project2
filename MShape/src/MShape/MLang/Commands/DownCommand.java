@@ -5,4 +5,10 @@ public class DownCommand implements ICommand {
     public String toString() {
         return "Down";
     }
+
+    @Override
+    public float GetDelayTiem() {
+        return 200;
+    }
+
  }

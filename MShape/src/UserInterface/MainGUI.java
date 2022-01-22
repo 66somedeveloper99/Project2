@@ -1,6 +1,9 @@
 package UserInterface;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.*;
 
 public class MainGUI {
@@ -15,6 +18,9 @@ public class MainGUI {
 
     public JPanel script_pnl = new JPanel();
     static public JTextArea script_txt = new JTextArea();
+
+    static public boolean profilerRunner = true;
+    public JToggleButton prof_tog = new JToggleButton("Profiler");
 
     public MainGUI() {
         frame = new JFrame("M Lang Graphics");
@@ -32,6 +38,10 @@ public class MainGUI {
         toolbar_pnl.add(open_btn, BorderLayout.PAGE_START);
         toolbar_pnl.add(save_btn, BorderLayout.PAGE_START);
         toolbar_pnl.add(run_btn, BorderLayout.PAGE_END);
+        toolbar_pnl.add(prof_tog);
+        prof_tog.addChangeListener(new ChangeListener() {
+            @Override public void stateChanged(ChangeEvent e) { MainGUI.profilerRunner = prof_tog.isSelected(); }
+        });
 
         run_btn.addActionListener(new RunButtonListener());
         open_btn.addActionListener(new OpenButtonListener());

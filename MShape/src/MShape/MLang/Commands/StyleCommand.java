@@ -8,16 +8,23 @@ public class StyleCommand implements ICommand {
     public StyleCommand(Style style) {
         this.style = style;
     }
+
     public StyleCommand(String styleStr) throws Exception {
         styleStr = styleStr.toUpperCase();
-        if(styleStr.equals("SOLID")) 
+        if (styleStr.equals("SOLID"))
             this.style = Style.Solid;
-        else if(styleStr.equals("DASHED")) 
+        else if (styleStr.equals("DASHED"))
             this.style = Style.Dashed;
-        else if(styleStr.equals("DOTTED")) 
+        else if (styleStr.equals("DOTTED"))
             this.style = Style.Dotted;
         else
-            throw new Exception("No familiar style is called " +styleStr);
+            throw new Exception("No familiar style is called " + styleStr);
     }
     
+    
+    @Override
+    public float GetDelayTiem() {
+        return 500;
+    }
+
 }

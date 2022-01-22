@@ -36,13 +36,17 @@ public class RunButtonListener implements ActionListener {
 
                 // executing commands
                 while (commander.hasNextCommand()) {
-                    System.out.println(commander.commands[commander.getCurrentCommandIndex()]);
+                    ICommand command = commander.commands[commander.getCurrentCommandIndex()];
+                    System.out.println(command);
+                    
                     commander.ExecuteNextCommand();
                     // wait for 0.1 second
-                    try {
-                        sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    if (MainGUI.profilerRunner) {
+                        try {
+                            sleep((long) command.GetDelayTiem());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

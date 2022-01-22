@@ -11,4 +11,8 @@ public class ColorCommand implements ICommand {
     public String toString() {
         return "Set Color(" + rName + ", " + gName + ", " + bName + ")";
     }
+    @Override
+    public float GetDelayTiem() {
+        return 500;
+    }
 }

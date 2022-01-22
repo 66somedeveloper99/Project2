@@ -5,4 +5,10 @@ public class UpCommand implements ICommand {
     public String toString() {
         return "Up";
     }
+
+    @Override
+    public float GetDelayTiem() {
+        return 200;
+    }
+
 }

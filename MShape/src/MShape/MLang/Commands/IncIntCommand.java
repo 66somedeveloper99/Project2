@@ -12,4 +12,10 @@ public class IncIntCommand implements ICommand {
     public String toString() {
         return "Increase var \"" + variableName + "\" : " + valName;
     }
+
+    @Override
+    public float GetDelayTiem() {
+        return 10;
+    }
+
 }

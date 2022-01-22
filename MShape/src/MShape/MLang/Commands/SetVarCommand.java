@@ -13,4 +13,10 @@ public class SetVarCommand implements ICommand {
     public String toString() {
         return "Set var \"" + variableName + "\" : " + value;
     }
+
+    @Override
+    public float GetDelayTiem() {
+        return 10;
+    }
+
 }

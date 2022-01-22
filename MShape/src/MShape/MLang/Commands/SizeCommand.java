@@ -8,6 +8,12 @@ public class SizeCommand implements ICommand {
 
     @Override
     public String toString() {
-        return "Size "+sizeName;
+        return "Size " + sizeName;
     }
+
+    @Override
+    public float GetDelayTiem() {
+        return 200;
+    }
+
 }
